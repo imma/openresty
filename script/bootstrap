@@ -10,11 +10,14 @@ function main {
   wget https://openresty.org/download/openresty-${OPENRESTY_VERSION}.tar.gz
   tar xvfz openresty-${OPENRESTY_VERSION}.tar.gz
   pushd openresty-${OPENRESTY_VERSION}
-  ./configure -j2 --prefix=$HOME/meh --with-cc-opt="-I$PKG_HOME/install/include" --with-ld-opt="-L$PKG_HOME/install/lib"
+  ./configure -j2 --prefix="$shome/vendor/install-${OPENRESTY_VERSION}" --with-cc-opt="-I$PKG_HOME/install/include" --with-ld-opt="-L$PKG_HOME/install/lib"
   gmake
   gmake install
   popd
-  rm -rf openresty-${OPENRESTY_VERSION} penresty-${OPENRESTY_VERSION}.tar.gz
+  ln -nfs "install-${OPENRESTY_VERSION}" "$shome/vendor/install"
+
+  set +f
+  rm -rf openresty-${OPENRESTY_VERSION} openresty-${OPENRESTY_VERSION}.tar.gz*
 }
 
 main "$@"
