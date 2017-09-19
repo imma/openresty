@@ -4,7 +4,17 @@ function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  uname -a
+  mkdir -p "$shome/vendor"
+  cd "$shome/vendor"
+
+  wget https://openresty.org/download/openresty-${OPENRESTY_VERSION}.tar.gz
+  tar xvfz openresty-${OPENRESTY_VERSION}.tar.gz
+  pushd openresty-${OPENRESTY_VERSION}
+  ./configure -j2 --prefix=$HOME/meh --with-cc-opt="-I$PKG_HOME/install/include" --with-ld-opt="-L$PKG_HOME/install/lib"
+  gmake
+  gmake install
+  popd
+  rm -rf openresty-${OPENRESTY_VERSION} penresty-${OPENRESTY_VERSION}.tar.gz
 }
 
 main "$@"
