@@ -9,6 +9,7 @@ function main {
   fi
 
   shift
+  export LD_LIBRARY_PATH="$PKG_HOME/install/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
   exec openresty -g 'daemon off;' "$@"
 }
 
