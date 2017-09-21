@@ -9,7 +9,7 @@ function main {
   fi
 
   shift
-  exec openresty "$@"
+  exec openresty -g 'daemon off;' "$@"
 }
 
 main "$@"
