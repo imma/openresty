@@ -4,6 +4,7 @@ function version {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
+  export LD_LIBRARY_PATH="$PKG_HOME/install/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
   local ver_openresty="$(openresty -v 2>&1 | cut -d/ -f2 || true)"
   jq -n --arg openresty "$ver_openresty" '{openresty: $openresty}'
 }
