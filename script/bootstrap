@@ -4,8 +4,6 @@ function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  PATH="$PATH:/sbin"
-
   mkdir -p "$shome/vendor"
   cd "$shome/vendor"
 
