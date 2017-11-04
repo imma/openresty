@@ -1,5 +1,32 @@
 #!/usr/bin/env bash
 
+function install_openresty {
+  curl https://openresty.org/download/openresty-${OPENRESTY_VERSION}.tar.gz -o openresty-${OPENRESTY_VERSION}.tar.gz
+  
+  tar xvfz openresty-${OPENRESTY_VERSION}.tar.gz
+  pushd openresty-${OPENRESTY_VERSION}
+  ./configure -j2 --prefix="$shome/vendor/install-${OPENRESTY_VERSION}" --with-cc-opt="-I$PKG_HOME/install/include" --with-ld-opt="-L$PKG_HOME/install/lib"
+  gmake
+  gmake install
+  popd
+  ln -nfs "install-${OPENRESTY_VERSION}" "$shome/vendor/openresty"
+}
+
+function install_luarocks {
+  curl http://luarocks.github.io/luarocks/releases/luarocks-${LUAROCKS_VERSION}.tar.gz -o luarocks-${LUAROCKS_VERSION}.tar.gz
+  tar xvfz luarocks-${LUAROCKS_VERSION}.tar.gz
+  pushd luarocks-${LUAROCKS_VERSION}
+  ./configure \
+    --prefix="$shome/vendor/install-luarocks-${LUAROCKS_VERSION}" \
+    --lua-suffix=jit \
+    --with-lua="$shome/vendor/install/luajit" \
+    --with-lua-include="$shome/vendor/install/luajit/include/luajit-2.1"
+  gmake
+  gmake install
+  popd
+  ln -nfs "install-luarocks-${LUAROCKS_VERSION}" "$shome/vendor/luarocks"
+}
+
 function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
@@ -7,17 +34,17 @@ function main {
   mkdir -p "$shome/vendor"
   cd "$shome/vendor"
 
-  curl https://openresty.org/download/openresty-${OPENRESTY_VERSION}.tar.gz -o openresty-${OPENRESTY_VERSION}.tar.gz
-  tar xvfz openresty-${OPENRESTY_VERSION}.tar.gz
-  pushd openresty-${OPENRESTY_VERSION}
-  ./configure -j2 --prefix="$shome/vendor/install-${OPENRESTY_VERSION}" --with-cc-opt="-I$PKG_HOME/install/include" --with-ld-opt="-L$PKG_HOME/install/lib"
-  gmake
-  gmake install
-  popd
-  ln -nfs "install-${OPENRESTY_VERSION}" "$shome/vendor/install"
+  set -x
+
+  rm -rf openresty-${OPENRESTY_VERSION} openresty-${OPENRESTY_VERSION}.tar.gz
+  rm -rf luarocks-${LUAROCKS_VERSION} luarocks-${LUAROCKS_VERSION}.tar.gz
+
+  install_openresty
+  install_luarocks
 
   set +f
   rm -rf openresty-${OPENRESTY_VERSION} openresty-${OPENRESTY_VERSION}.tar.gz*
+  rm -rf luarocks-${LUAROCKS_VERSION} luarocks-${LUAROCKS_VERSION}.tar.gz*
 }
 
 main "$@"
