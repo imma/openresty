@@ -12,10 +12,13 @@ function install_openresty {
     --with-http_ssl_module \
     --with-http_stub_status_module \
     --with-http_v2_module
-  gmake
+  gmake build
   gmake install
   popd
   ln -nfs "install-${OPENRESTY_VERSION}" "$shome/vendor/openresty"
+  
+  mkdir -p "$shome/bin"
+  ln -nfs "$(which luajit)" "$shome/bin/lua"
 }
 
 function install_luarocks {

@@ -3,6 +3,8 @@
 function _openresty_profile {
   local shome="${_openresty_home:="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"}"
   PATH="$shome/bin:$shome/vendor/openresty/bin:$shome/vendor/openresty/luajit/bin:$shome/vendor/luarocks/bin:$PATH"
+
+  export LUA_PATH="$shome/vendor/luarocks/share/lua/5.1/?.lua;;"
 }
 
 _openresty_profile
