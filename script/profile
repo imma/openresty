@@ -2,7 +2,7 @@
 
 function _openresty_profile {
   local shome="${_openresty_home:="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"}"
-  PATH="$shome/bin:$shome/vendor/install/bin:$PATH"
+  PATH="$shome/bin:$shome/vendor/install/bin:$shome/vendor/install/luajit/bin:$PATH"
 }
 
 _openresty_profile
