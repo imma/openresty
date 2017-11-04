@@ -5,7 +5,13 @@ function install_openresty {
   
   tar xvfz openresty-${OPENRESTY_VERSION}.tar.gz
   pushd openresty-${OPENRESTY_VERSION}
-  ./configure -j2 --prefix="$shome/vendor/install-${OPENRESTY_VERSION}" --with-cc-opt="-I$PKG_HOME/install/include" --with-ld-opt="-L$PKG_HOME/install/lib"
+  ./configure -j2 --prefix="$shome/vendor/install-${OPENRESTY_VERSION}" --with-cc-opt="-I$PKG_HOME/install/include" --with-ld-opt="-L$PKG_HOME/install/lib" \
+    --with-pcre-jit \
+    --with-ipv6 \
+    --with-http_realip_module \
+    --with-http_ssl_module \
+    --with-http_stub_status_module \
+    --with-http_v2_module
   gmake
   gmake install
   popd
