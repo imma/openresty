@@ -28,8 +28,8 @@ function install_luarocks {
   ./configure \
     --prefix="$shome/vendor/install-luarocks-${LUAROCKS_VERSION}" \
     --lua-suffix=jit \
-    --with-lua="$shome/vendor/install/luajit" \
-    --with-lua-include="$shome/vendor/install/luajit/include/luajit-2.1"
+    --with-lua="$shome/vendor/openresty/luajit" \
+    --with-lua-include="$shome/vendor/openresty/luajit/include/luajit-2.1"
   gmake
   gmake install
   popd
