@@ -15,10 +15,6 @@ function install_openresty {
   gmake build
   gmake install
   popd
-  ln -nfs "install-${OPENRESTY_VERSION}" "$shome/vendor/openresty"
-  
-  mkdir -p "$shome/bin"
-  ln -nfs "$(which luajit)" "$shome/bin/lua"
 }
 
 function install_luarocks {
@@ -33,7 +29,6 @@ function install_luarocks {
   gmake
   gmake install
   popd
-  ln -nfs "install-luarocks-${LUAROCKS_VERSION}" "$shome/vendor/luarocks"
 }
 
 function main {
@@ -60,6 +55,11 @@ function main {
     install_luarocks
     cache location archive "$pth_install_luarocks"
   fi
+
+  mkdir -p "$shome/bin"
+  ln -nfs "install-${OPENRESTY_VERSION}" "$shome/vendor/openresty"
+  ln -nfs "$(which luajit)" "$shome/bin/lua"
+  ln -nfs "install-luarocks-${LUAROCKS_VERSION}" "$shome/vendor/luarocks"
 
   set +f
   rm -rf openresty-${OPENRESTY_VERSION} openresty-${OPENRESTY_VERSION}.tar.gz*
