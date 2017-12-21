@@ -35,7 +35,7 @@ function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  mkdir -p "$shome/vendor"
+  mkdir -p "$shome/bin" "$shome/vendor"
   cd "$shome/vendor"
 
   set -x
@@ -51,14 +51,14 @@ function main {
     cache location archive "$pth_install_openresty"
   fi
 
+  ln -nfs "install-${OPENRESTY_VERSION}" "$shome/vendor/openresty"
+  ln -nfs "$(which luajit)" "$shome/bin/lua"
+  
   if ! cache location "$pth_install_luarocks"; then
     install_luarocks
     cache location archive "$pth_install_luarocks"
   fi
 
-  mkdir -p "$shome/bin"
-  ln -nfs "install-${OPENRESTY_VERSION}" "$shome/vendor/openresty"
-  ln -nfs "$(which luajit)" "$shome/bin/lua"
   ln -nfs "install-luarocks-${LUAROCKS_VERSION}" "$shome/vendor/luarocks"
 
   set +f
