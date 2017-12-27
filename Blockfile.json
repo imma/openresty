@@ -1,8 +1,7 @@
 {
-  "require": [
-  ],
+  "require": [],
   "versions": {
-    "openresty": "openresty/openresty",
-    "luarocks": "luarocks/luarocks"
+    "luarocks": "luarocks/luarocks",
+    "openresty": "openresty/openresty"
   }
 }
