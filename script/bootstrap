@@ -64,6 +64,8 @@ function main {
   set +f
   rm -rf openresty-${OPENRESTY_VERSION} openresty-${OPENRESTY_VERSION}.tar.gz*
   rm -rf luarocks-${LUAROCKS_VERSION} luarocks-${LUAROCKS_VERSION}.tar.gz*
+
+  block ensure www/nginx-devel
 }
 
 main "$@"
