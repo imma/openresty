@@ -6,11 +6,13 @@ function version {
 
   export LD_LIBRARY_PATH="$PKG_HOME/install/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
   local ver_openresty="$(openresty -v 2>&1 | cut -d/ -f2 || true)"
+  local ver_nginx="$(nginx -v 2>&1 | cut -d/ -f2 || true)"
   local ver_luarocks="$(luarocks --version 2>/dev/null | head -1 | awk '{print $NF}' || true)"
   jq -n \
     --arg openresty "$ver_openresty" \
+    --arg nginx "$ver_nginx" \
     --arg luarocks "$ver_luarocks" \
-      '{openresty: $openresty, luarocks: $luarocks}'
+      '{openresty: $openresty, luarocks: $luarocks, nginx: $nginx}'
 }
 
 version "$@"
