@@ -8,6 +8,10 @@ function main {
     return 1
   fi
 
+  if [[ "$($shome/script/version | jq -r '.nginx')" != "$NGINX_VERSION" ]]; then
+    return 1
+  fi
+
   if [[ "$($shome/script/version | jq -r '.luarocks')" != "$LUAROCKS_VERSION" ]]; then
     return 1
   fi
